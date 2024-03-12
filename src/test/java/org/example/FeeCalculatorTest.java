@@ -44,4 +44,20 @@ class FeeCalculatorTest {
         //THEN
         assertThat(actualFee).isEqualTo(60.0);
     }
+
+    @Test
+    public void should_throw_exception_when_ticketType_not_supported_age_above_14(){
+        Visitor adulte = new Visitor(20);
+
+        // Utilisation de assertThrows pour vérifier qu'une exception est lancée
+        assertThrows(IllegalArgumentException.class, () -> {
+            FeeCalculator.calculateFee(adulte, TicketType.WEEK);
+        });
+
+        // Utilisation de assertThat pour des assertions plus détaillées sur l'exception
+        assertThat(exception)
+                .isNotNull() //
+                .isInstanceOf(IllegalArgumentException.class) //
+                .hasMessageContaining("TicketType not supported"); //
+    }
 }
